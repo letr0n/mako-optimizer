@@ -32,6 +32,10 @@ class Compiler extends \mako\reactor\Task
 				'strip-comments' => 'Optionally strips comments from the compiled class file.',
 			],
 		],
+		'clear'  =>
+		[
+			'description' => 'Removes the file containing the compiled classes.',
+		],
 	];
 
 	/**
@@ -72,11 +76,11 @@ class Compiler extends \mako\reactor\Task
 
 		$parsed = (new Parser(new Lexer))->parse($contents);
 
-		$printed =  (new Printer)->prettyPrint($parsed);
+		$printed =  trim((new Printer)->prettyPrint($parsed));
 
 		if(preg_match('/namespace([^;]++);/', $printed, $matches) !== 0)
 		{
-			$printed = 'namespace ' . $matches[1] . '{' . PHP_EOL . str_replace($matches[0], '', $printed) . PHP_EOL . '}';
+			$printed = 'namespace ' . $matches[1] . ' {' . str_replace($matches[0], '', $printed) . '}';
 		}
 
 		return $printed;
@@ -94,16 +98,22 @@ class Compiler extends \mako\reactor\Task
 
 	protected function compileClasses($classes, $vendorPath, $stripComments)
 	{
+		$progress = $this->output->progress(count($classes));
+
 		$fileResource = fopen($this->getCompileFile(), 'w+');
 
-		fwrite($fileResource, '<?php' . PHP_EOL . PHP_EOL);
+		fwrite($fileResource, '<?php' . PHP_EOL);
 
 		foreach($classes as $class)
 		{
 			fwrite($fileResource, $this->compileClass(str_replace(':vendor:', $vendorPath, $class), $stripComments));
+
+			$progress->advance();
 		}
 
 		fclose($fileResource);
+
+		$progress->finish();
 	}
 
 	/**
@@ -127,7 +137,31 @@ class Compiler extends \mako\reactor\Task
 		$stripComments = $this->input->param('strip-comments', false);
 
 		$this->compileClasses($classes, $vendorPath, $stripComments);
+	}
 
-		$this->output->writeln(sprintf('Done! Compiled %s classes.', count($classes)));
+	/**
+	 * Removes the compiled class file.
+	 * 
+	 * @access  public
+	 * @return  void
+	 */
+
+	public function clear()
+	{
+		if(file_exists($this->getCompileFile()))
+		{
+			if(!is_writable($this->getCompileFile()))
+			{
+				return $this->output->stderr()->writeln(sprintf('<red>Unable to clear the compiled classes. Make sure that the file [ %s ] is writable.</red>', $this->getCompileFile()));
+			}
+
+			unlink($this->getCompileFile());
+
+			$this->output->writeln('<green>The compiled classes have been cleared.</green>');
+		}
+		else
+		{
+			$this->output->writeln('<green>Nothing to clear.</green>');
+		}
 	}
 }
