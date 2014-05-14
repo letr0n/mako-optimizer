@@ -115,8 +115,6 @@ class Compiler extends \mako\reactor\Task
 
 	public function compile()
 	{
-		$stripComments = $this->input->param('strip-comments', false);
-
 		if(!is_writable($this->getCompilePath()) || (file_exists($this->getCompileFile()) && !is_writable($this->getCompileFile())))
 		{
 			return $this->output->stderr()->writeln(sprintf('Unable to compile classes. Make sure that the compile directory [ %s ] is writable.', $this->getCompilePath()));
@@ -125,6 +123,8 @@ class Compiler extends \mako\reactor\Task
 		$vendorPath = $this->config->get('optimizer::config.vendor_path');
 
 		$classes = $this->config->get('optimizer::config.classes');
+		
+		$stripComments = $this->input->param('strip-comments', false);
 
 		$this->compileClasses($classes, $vendorPath, $stripComments);
 
