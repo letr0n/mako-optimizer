@@ -5,6 +5,7 @@ return
 	/**
 	 * Path to the vendor dir
 	 */
+	 
 	'vendor_path' => realpath(__DIR__ . '/../../../../vendor'),
 
 	/**
