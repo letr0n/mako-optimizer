@@ -20,3 +20,7 @@ You can then execute the optimizer compiler.
 ### How much faster does it get?
 
 That depends on a lot of things so the easiest way to find out is to try for yourself.
+
+### Known issues
+
+* The ```compile``` action might output the following error "Undefined variable: undefinedVariable" ... just ingore it.
