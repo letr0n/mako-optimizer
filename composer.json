@@ -1,0 +1,13 @@
+{
+	"name": "letron/optimizer",
+	"type": "mako-package",
+	"autoload": {
+		"psr-4": {
+			"optimizer\\": ""
+		}
+	},
+	"require": {
+		"composer/installers": "*",
+		"nikic/php-parser": "1.0.0-beta1"
+	}
+}
