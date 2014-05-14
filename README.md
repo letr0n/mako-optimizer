@@ -11,11 +11,15 @@ You'll need to add the following lines to the ```index.php``` file (before the p
 		include MAKO_APPLICATION_PATH . '/storage/compiled.php';
 	}
 
-You can then execute the optimizer compiler.
+You can then execute the ```compile``` action of the optimizer compiler.
 
 	php reactor optimizer::compiler.compile
 
 	php reactor optimizer::compiler.compiler --strip-comments
+	
+If you want to clear the compiled files then you can do so by executing the ```clear``` action of the optimizer compiler.
+
+	php reactor optimizer::compiler.clear
 	
 ### How much faster does it get?
 
