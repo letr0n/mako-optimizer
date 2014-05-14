@@ -18,6 +18,8 @@ return
 
 		':vendor:/mako/framework/src/mako/config/Config.php',
 		':vendor:/mako/framework/src/mako/utility/Arr.php',
+		':vendor:/mako/framework/src/mako/core/Application.php',
+		':vendor:/mako/framework/src/mako/core/WebApplication.php',
 		':vendor:/mako/framework/src/mako/core/services/Service.php',
 		':vendor:/mako/framework/src/mako/error/ErrorHandler.php',
 		':vendor:/mako/framework/src/mako/security/Signer.php',
@@ -55,7 +57,5 @@ return
 		':vendor:/mako/framework/src/mako/core/services/ValidatorFactoryService.php',
 		':vendor:/mako/framework/src/mako/core/services/PaginationFactoryService.php',
 		':vendor:/mako/framework/src/mako/core/services/GatekeeperService.php',
-		':vendor:/mako/framework/src/mako/core/Application.php',
-		':vendor:/mako/framework/src/mako/core/WebApplication.php',
 	],
 ];
