@@ -15,7 +15,8 @@ return
 	'classes' => 
 	[
 		// Core classes
-
+		
+		':vendor:/mako/framework/src/mako/file/FileSystem.php',
 		':vendor:/mako/framework/src/mako/config/Config.php',
 		':vendor:/mako/framework/src/mako/utility/Arr.php',
 		':vendor:/mako/framework/src/mako/core/Application.php',
