@@ -23,6 +23,7 @@ return
 		':vendor:/mako/framework/src/mako/core/WebApplication.php',
 		':vendor:/mako/framework/src/mako/core/services/Service.php',
 		':vendor:/mako/framework/src/mako/error/ErrorHandler.php',
+		':vendor:/mako/framework/src/mako/security/Comparer.php',
 		':vendor:/mako/framework/src/mako/security/Signer.php',
 		':vendor:/mako/framework/src/mako/http/routing/Routes.php',
 		':vendor:/mako/framework/src/mako/http/routing/Route.php',
