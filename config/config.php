@@ -20,7 +20,7 @@ return
 		':vendor:/mako/framework/src/mako/config/Config.php',
 		':vendor:/mako/framework/src/mako/utility/Arr.php',
 		':vendor:/mako/framework/src/mako/application/Application.php',
-		':vendor:/mako/framework/src/mako/application/WebApplication.php',
+		':vendor:/mako/framework/src/mako/application/Web.php',
 		':vendor:/mako/framework/src/mako/application/services/Service.php',
 		':vendor:/mako/framework/src/mako/error/ErrorHandler.php',
 		':vendor:/mako/framework/src/mako/security/Comparer.php',
