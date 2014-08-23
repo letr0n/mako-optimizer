@@ -1,6 +1,7 @@
 {
 	"name": "letron/optimizer",
 	"description": "An optimizer for the Mako framework.",
+	"keywords": ["mako", "framework", "optimizer"],
 	"type": "mako-package",
 	"autoload": {
 		"psr-4": {
