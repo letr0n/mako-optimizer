@@ -3,10 +3,10 @@
 return 
 [
 	/**
-	 * Path to the vendor dir
+	 * Path to the compile path.
 	 */
 	 
-	'vendor_path' => realpath(__DIR__ . '/../../../../vendor'),
+	'compile_path' => realpath(__DIR__ . '/../../../storage'),
 
 	/**
 	 * List of classes to compile.
@@ -14,50 +14,54 @@ return
 
 	'classes' => 
 	[
-		// Core classes
-		
-		':vendor:/mako/framework/src/mako/file/FileSystem.php',
-		':vendor:/mako/framework/src/mako/config/Config.php',
-		':vendor:/mako/framework/src/mako/utility/Arr.php',
-		':vendor:/mako/framework/src/mako/application/Application.php',
-		':vendor:/mako/framework/src/mako/application/Web.php',
-		':vendor:/mako/framework/src/mako/application/services/Service.php',
-		':vendor:/mako/framework/src/mako/error/ErrorHandler.php',
-		':vendor:/mako/framework/src/mako/security/Comparer.php',
-		':vendor:/mako/framework/src/mako/security/Signer.php',
-		':vendor:/mako/framework/src/mako/http/routing/Routes.php',
-		':vendor:/mako/framework/src/mako/http/routing/Route.php',
-		':vendor:/mako/framework/src/mako/http/routing/Router.php',
-		':vendor:/mako/framework/src/mako/http/routing/Dispatcher.php',
-		':vendor:/mako/framework/src/mako/http/routing/Controller.php',
-		':vendor:/mako/framework/src/mako/view/renderers/RendererInterface.php',
-		':vendor:/mako/framework/src/mako/view/renderers/CacheableInterface.php',
-		':vendor:/mako/framework/src/mako/view/renderers/Renderer.php',
-		':vendor:/mako/framework/src/mako/view/renderers/Template.php',
-		':vendor:/mako/framework/src/mako/view/ViewFactory.php',
-		':vendor:/mako/framework/src/mako/http/Request.php',
-		':vendor:/mako/framework/src/mako/http/Response.php',
-		':vendor:/mako/framework/src/mako/syringe/Container.php',
 
-		// Services
+	],
 
-		':vendor:/mako/framework/src/mako/application/services/ErrorHandlerService.php',
-		':vendor:/mako/framework/src/mako/application/services/RequestService.php',
-		':vendor:/mako/framework/src/mako/application/services/ResponseService.php',
-		':vendor:/mako/framework/src/mako/application/services/SignerService.php',
-		':vendor:/mako/framework/src/mako/application/services/RouteService.php',
-		':vendor:/mako/framework/src/mako/application/services/URLBuilderService.php',
-		':vendor:/mako/framework/src/mako/application/services/LoggerService.php',
-		':vendor:/mako/framework/src/mako/application/services/ViewFactoryService.php',
-		':vendor:/mako/framework/src/mako/application/services/SessionService.php',
-		':vendor:/mako/framework/src/mako/application/services/DatabaseService.php',
-		':vendor:/mako/framework/src/mako/application/services/RedisService.php',
-		':vendor:/mako/framework/src/mako/application/services/I18nService.php',
-		':vendor:/mako/framework/src/mako/application/services/HumanizerService.php',
-		':vendor:/mako/framework/src/mako/application/services/CacheService.php',
-		':vendor:/mako/framework/src/mako/application/services/CryptoService.php',
-		':vendor:/mako/framework/src/mako/application/services/ValidatorFactoryService.php',
-		':vendor:/mako/framework/src/mako/application/services/PaginationFactoryService.php',
-		':vendor:/mako/framework/src/mako/application/services/GatekeeperService.php',
+	/**
+	 * List of core classes to compile.
+	 */
+
+	'core_classes' => 
+	[
+		'\mako\file\FileSystem',
+		'\mako\config\Config',
+		'\mako\utility\Arr',
+		'\mako\application\Application',
+		'\mako\application\Web',
+		'\mako\application\services\Service',
+		'\mako\error\ErrorHandler',
+		'\mako\security\Comparer',
+		'\mako\security\Signer',
+		'\mako\http\routing\Routes',
+		'\mako\http\routing\Route',
+		'\mako\http\routing\Router',
+		'\mako\http\routing\Dispatcher',
+		'\mako\http\routing\Controller',
+		'\mako\view\renderers\RendererInterface',
+		'\mako\view\renderers\CacheableInterface',
+		'\mako\view\renderers\Renderer',
+		'\mako\view\renderers\Template',
+		'\mako\view\ViewFactory',
+		'\mako\http\Request',
+		'\mako\http\Response',
+		'\mako\syringe\Container',
+		'\mako\application\services\ErrorHandlerService',
+		'\mako\application\services\RequestService',
+		'\mako\application\services\ResponseService',
+		'\mako\application\services\SignerService',
+		'\mako\application\services\RouteService',
+		'\mako\application\services\URLBuilderService',
+		'\mako\application\services\LoggerService',
+		'\mako\application\services\ViewFactoryService',
+		'\mako\application\services\SessionService',
+		'\mako\application\services\DatabaseService',
+		'\mako\application\services\RedisService',
+		'\mako\application\services\I18nService',
+		'\mako\application\services\HumanizerService',
+		'\mako\application\services\CacheService',
+		'\mako\application\services\CryptoService',
+		'\mako\application\services\ValidatorFactoryService',
+		'\mako\application\services\PaginationFactoryService',
+		'\mako\application\services\GatekeeperService',
 	],
 ];

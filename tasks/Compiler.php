@@ -2,6 +2,8 @@
 
 namespace optimizer\tasks;
 
+use \ReflectionClass;
+
 use \PhpParser\Lexer;
 use \PhpParser\Parser;
 use \PhpParser\PrettyPrinter\Standard as Printer;
@@ -47,7 +49,7 @@ class Compiler extends \mako\reactor\Task
 
 	protected function getCompilePath()
 	{
-		return $this->app->getApplicationPath() . '/storage';
+		return $this->config->get('optimizer::config.compile_path');
 	}
 
 	/**
@@ -60,6 +62,18 @@ class Compiler extends \mako\reactor\Task
 	public function getCompileFile()
 	{
 		return $this->getCompilePath() . '/compiled.php';
+	}
+
+	/**
+	 * Returns array of classes to compile.
+	 * 
+	 * @access  protected
+	 * @return  array
+	 */
+
+	public function getClasses()
+	{
+		return array_unique(array_merge($this->config->get('optimizer::config.core_classes'), $this->config->get('optimizer::config.classes')));
 	}
 
 	/**
@@ -91,12 +105,11 @@ class Compiler extends \mako\reactor\Task
 	 *
 	 * @access  protected
 	 * @param   string     $classes        Array of classes we want to compile
-	 * @param   string     $vendorPath     Path to the vendor directory
 	 * @param   boolean    $stripComments  TRUE to strip comments and FALSE to leave them
 	 * @return  void
 	 */
 
-	protected function compileClasses($classes, $vendorPath, $stripComments)
+	protected function compileClasses($classes, $stripComments)
 	{
 		$progress = $this->output->progress(count($classes));
 
@@ -106,7 +119,12 @@ class Compiler extends \mako\reactor\Task
 
 		foreach($classes as $class)
 		{
-			fwrite($fileResource, $this->compileClass(str_replace(':vendor:', $vendorPath, $class), $stripComments));
+			$classPath = (new ReflectionClass($class))->getFileName();
+
+			if($classPath !== false)
+			{
+				fwrite($fileResource, $this->compileClass($classPath, $stripComments));
+			}
 
 			$progress->advance();
 		}
@@ -130,13 +148,11 @@ class Compiler extends \mako\reactor\Task
 			return $this->output->stderr()->writeln(sprintf('Unable to compile classes. Make sure that the compile directory [ %s ] is writable.', $this->getCompilePath()));
 		}
 
-		$vendorPath = $this->config->get('optimizer::config.vendor_path');
-
-		$classes = $this->config->get('optimizer::config.classes');
+		$classes = $this->getClasses();
 		
 		$stripComments = $this->input->param('strip-comments', false);
 
-		$this->compileClasses($classes, $vendorPath, $stripComments);
+		$this->compileClasses($classes, $stripComments);
 	}
 
 	/**
