@@ -2,14 +2,13 @@
 	"name": "letron/optimizer",
 	"description": "An optimizer for the Mako framework.",
 	"keywords": ["mako", "framework", "optimizer"],
-	"type": "mako-package",
+	"license": "BSD-3-Clause",
 	"autoload": {
 		"psr-4": {
-			"optimizer\\": ""
+			"letron\\optimizer\\": "src"
 		}
 	},
 	"require": {
-		"composer/installers": "*",
-		"nikic/php-parser": "1.0.0-beta1"
+		"nikic/php-parser": "1.1.*"
 	}
 }
