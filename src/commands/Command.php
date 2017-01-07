@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Yamada Taro
+ * @copyright Yamada Taro
  */
 
 namespace letron\optimizer\commands;
@@ -11,19 +11,17 @@ use mako\reactor\Command as BaseCommand;
 /**
  * Command.
  *
- * @author  Yamada Taro
+ * @author Yamada Taro
  */
-
 abstract class Command extends BaseCommand
 {
 	/**
 	 * Returns the compilation path.
 	 *
-	 * @access  protected
-	 * @return  string
+	 * @access protected
+	 * @return string
 	 */
-
-	protected function getCompilePath()
+	protected function getCompilePath(): string
 	{
 		return $this->config->get('optimizer::config.compile_path');
 	}
@@ -31,11 +29,10 @@ abstract class Command extends BaseCommand
 	/**
 	 * Returns the path to the compiled classes.
 	 *
-	 * @access  protected
-	 * @return  string
+	 * @access protected
+	 * @return string
 	 */
-
-	public function getCompileFile()
+	public function getCompileFile(): string
 	{
 		return $this->getCompilePath() . '/compiled.php';
 	}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Yamada Taro
+ * @copyright Yamada Taro
  */
 
 namespace letron\optimizer;
@@ -11,9 +11,8 @@ use mako\application\Package;
 /**
  * Optimizer package.
  *
- * @author  Yamada Taro
+ * @author Yamada Taro
  */
-
 class OptimizerPackage extends Package
 {
 	/**
@@ -21,7 +20,6 @@ class OptimizerPackage extends Package
 	 *
 	 * @var string
 	 */
-
 	protected $packageName = 'letron/optimizer';
 
 	/**
@@ -29,7 +27,6 @@ class OptimizerPackage extends Package
 	 *
 	 * @var string
 	 */
-
 	protected $fileNamespace = 'optimizer';
 
 	/**
@@ -37,7 +34,6 @@ class OptimizerPackage extends Package
 	 *
 	 * @var array
 	 */
-
 	protected $commands =
 	[
 		'optimizer.clear'   => 'letron\optimizer\commands\Clear',

@@ -1,23 +1,22 @@
 <?php
 
 /**
- * @copyright  Yamada Taro
+ * @copyright Yamada Taro
  */
 
 namespace letron\optimizer\commands;
 
-use \ReflectionClass;
+use ReflectionClass;
 
 use letron\optimizer\commands\Command;
 
-use \PhpParser\Lexer;
-use \PhpParser\Parser;
-use \PhpParser\PrettyPrinter\Standard as Printer;
+use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter\Standard as Printer;
 
 /**
  * Compile command.
  *
- * @author  Yamada Taro
+ * @author Yamada Taro
  */
 
 class Compile extends Command
@@ -27,16 +26,15 @@ class Compile extends Command
 	 *
 	 * @var array
 	 */
-
 	protected $commandInformation =
 	[
 		'description' => 'Compiles classes into a single file.',
 		'options'     =>
 		[
-			'strip-comments' =>
+			'keep-comments' =>
 			[
 				'optional'    => true,
-				'description' => 'Optionally strips comments from the compiled class file.'
+				'description' => 'Keep comments from being removed.'
 			],
 		]
 	];
@@ -44,11 +42,10 @@ class Compile extends Command
 	/**
 	 * Returns array of classes to compile.
 	 *
-	 * @access  protected
-	 * @return  array
+	 * @access protected
+	 * @return array
 	 */
-
-	public function getClasses()
+	public function getClasses(): array
 	{
 		return array_unique(array_merge($this->config->get('optimizer::config.core_classes'), $this->config->get('optimizer::config.classes')));
 	}
@@ -56,16 +53,18 @@ class Compile extends Command
 	/**
 	 * Compiles a class.
 	 *
-	 * @access  protected
-	 * @param   string     $class  Class path
-	 * @return  string
+	 * @access protected
+	 * @param  string $class        Class path
+	 * @param  bool   $keepComments True to keep comments and false to remove them
+	 * @return string
 	 */
-
-	protected function compileClass($class, $stripComments)
+	protected function compileClass(string $class, bool $keepComments): string
 	{
-		$contents = $stripComments ? php_strip_whitespace($class) : file_get_contents($class);
+		$contents = $keepComments ? file_get_contents($class) : php_strip_whitespace($class);
 
-		$parsed = (new Parser(new Lexer))->parse($contents);
+		$parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
+
+		$parsed = $parser->parse($contents);
 
 		$printed =  trim((new Printer)->prettyPrint($parsed));
 
@@ -80,13 +79,11 @@ class Compile extends Command
 	/**
 	 * Compiles the classes.
 	 *
-	 * @access  protected
-	 * @param   string     $classes        Array of classes we want to compile
-	 * @param   boolean    $stripComments  TRUE to strip comments and FALSE to leave them
-	 * @return  void
+	 * @access protected
+	 * @param  array $classes      Array of classes we want to compile
+	 * @param  bool  $keepComments True to keep comments and false to remove them
 	 */
-
-	protected function compileClasses($classes, $stripComments)
+	protected function compileClasses(array $classes, bool $keepComments)
 	{
 		$progressbar = $this->progressBar(count($classes));
 
@@ -100,7 +97,7 @@ class Compile extends Command
 
 			if($classPath !== false)
 			{
-				fwrite($fileResource, $this->compileClass($classPath, $stripComments));
+				fwrite($fileResource, $this->compileClass($classPath, $keepComments));
 			}
 
 			$progressbar->advance();
@@ -112,19 +109,18 @@ class Compile extends Command
 	/**
 	 * Compiles classes into a single file.
 	 *
-	 * @access  public
-	 * @param   boolean  $strip_comments  TRUE to strip comments and FALSE to leave them
+	 * @access public
+	 * @param bool $keep_comments True to keep comments and false to remove them
 	 */
-
-	public function execute($strip_comments = false)
+	public function execute(bool $keep_comments = false)
 	{
 		if(!is_writable($this->getCompilePath()) || (file_exists($this->getCompileFile()) && !is_writable($this->getCompileFile())))
 		{
-			$this->error(sprintf('Unable to compile classes. Make sure that the compile directory [ %s ] is writable.', $this->getCompilePath()));
+			$this->error(sprintf('Unable to compile classes. Make sure that the storage directory [ %s ] is writable.', $this->getCompilePath()));
 
 			return;
 		}
 
-		$this->compileClasses($this->getClasses(), $strip_comments);
+		$this->compileClasses($this->getClasses(), $keep_comments);
 	}
 }

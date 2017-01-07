@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Yamada Taro
+ * @copyright Yamada Taro
  */
 
 namespace letron\optimizer\commands;
@@ -11,9 +11,8 @@ use letron\optimizer\commands\Command;
 /**
  * Clear command.
  *
- * @author  Yamada Taro
+ * @author Yamada Taro
  */
-
 class Clear extends Command
 {
 	/**
@@ -21,18 +20,16 @@ class Clear extends Command
 	 *
 	 * @var array
 	 */
-
 	protected $commandInformation =
 	[
-		'description' => 'Clears compiled classes.',
+		'description' => 'Clears the compiled classes.',
 	];
 
 	/**
 	 * Clears the compiled classes.
 	 *
-	 * @access  public
+	 * @access public
 	 */
-
 	public function execute()
 	{
 		$file = $this->getCompileFile();

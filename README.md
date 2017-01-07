@@ -26,7 +26,3 @@ If you want to clear the compiled files then you can do so by executing the ```c
 ### How much faster does it get?
 
 That depends on a lot of factors so the easiest way to find out is to try for yourself.
-
-### Known issues
-
-* The ```compile``` action might output the following error "Undefined variable: undefinedVariable" ... just ingore it.
