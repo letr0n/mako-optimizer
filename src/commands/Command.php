@@ -16,11 +16,6 @@ use mako\reactor\Command as BaseCommand;
 abstract class Command extends BaseCommand
 {
 	/**
-	 * {@inheritdoc}
-	 */
-	protected $isStrict = true;
-
-	/**
 	 * Returns the compilation path.
 	 *
 	 * @access protected

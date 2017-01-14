@@ -9,9 +9,9 @@ namespace letron\optimizer\commands;
 use ReflectionClass;
 
 use letron\optimizer\commands\Command;
-use letron\optimizer\Printer;
 
 use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter\Standard as Printer;
 
 /**
  * Compile command.
@@ -34,7 +34,7 @@ class Compile extends Command
 			'keep-comments' =>
 			[
 				'optional'    => true,
-				'description' => 'Keep comments from being removed.',
+				'description' => 'Keep comments from being removed.'
 			],
 		]
 	];
@@ -56,10 +56,9 @@ class Compile extends Command
 	 * @access protected
 	 * @param  string $class        Class path
 	 * @param  bool   $keepComments True to keep comments and false to remove them
-	 * @param  array  $options      Printer options
 	 * @return string
 	 */
-	protected function compileClass(string $class, bool $keepComments, array $options): string
+	protected function compileClass(string $class, bool $keepComments): string
 	{
 		$contents = $keepComments ? file_get_contents($class) : php_strip_whitespace($class);
 
@@ -67,7 +66,7 @@ class Compile extends Command
 
 		$parsed = $parser->parse($contents);
 
-		$printed =  trim((new Printer($options))->prettyPrint($parsed));
+		$printed =  trim((new Printer)->prettyPrint($parsed));
 
 		if(preg_match('/namespace([^;]++);/', $printed, $matches) !== 0)
 		{
@@ -92,20 +91,13 @@ class Compile extends Command
 
 		fwrite($fileResource, '<?php' . PHP_EOL);
 
-		$ignoredFunction = $this->config->get('optimizer::config.ignored_functions.*', []);
-
 		foreach($classes as $class)
 		{
 			$classPath = (new ReflectionClass($class))->getFileName();
 
 			if($classPath !== false)
 			{
-				$options = 
-				[
-					'ignored_functions' => $ignoredFunction + $this->config->get('optimizer::config.ignored_functions.' . $class, []),
-				];
-
-				fwrite($fileResource, $this->compileClass($classPath, $keepComments, $options));
+				fwrite($fileResource, $this->compileClass($classPath, $keepComments));
 			}
 
 			$progressbar->advance();

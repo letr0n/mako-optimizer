@@ -8,14 +8,6 @@ return
 	'compile_path' => realpath(__DIR__ . '/../../../../app/storage'),
 
 	/**
-	 * Functions that shouldn't be prefixed.
-	 */
-	'ignored_functions' =>
-	[
-
-	],
-
-	/**
 	 * List of classes to compile.
 	 */
 	'classes' =>
